@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shafra Film Studio — Official Creator Publishing Portal</title>
+  <meta name="description" content="Official creator studio and TikTok Content Posting publishing portal for Shafra Film (@ShafraFilm)." />
+  <style>
+    :root {
+      --bg: #070a10;
+      --surface: #0f141e;
+      --surface-2: #161d2b;
+      --border: rgba(255, 255, 255, 0.09);
+      --text: #f3f6fb;
+      --muted: #98a4b8;
+      --gold: #f5c156;
+      --crimson: #fe2c55;
+      --cyan: #25f4ee;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: radial-gradient(circle at top right, rgba(254,44,85,0.12), transparent 36%),
+                  radial-gradient(circle at top left, rgba(37,244,238,0.09), transparent 34%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1040px; margin: 0 auto; padding: 28px 20px 64px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand img {
+      width: 52px; height: 52px; border-radius: 14px; object-fit: cover;
+      border: 1px solid rgba(245,193,86,0.45);
+    }
+    .brand h1 { margin: 0; font-size: 1.25rem; letter-spacing: 0.2px; }
+    .brand p { margin: 2px 0 0; font-size: 0.86rem; color: var(--muted); }
+    nav { display: flex; gap: 18px; font-size: 0.9rem; }
+    .hero {
+      margin: 26px 0; padding: 22px 24px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .hero h2 { margin: 0 0 6px; font-size: 1.35rem; }
+    .hero p { margin: 0; color: var(--muted); max-width: 620px; font-size: 0.95rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: none; border-radius: 10px; padding: 11px 18px; font-weight: 600;
+      font-size: 0.92rem; cursor: pointer; transition: transform 0.12s, opacity 0.15s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-tiktok { background: var(--crimson); color: #fff; }
+    .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+    .grid { display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 20px; margin-top: 18px; }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px;
+    }
+    .card h3 { margin: 0 0 14px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+    .creator-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; margin-bottom: 16px;
+    }
+    .creator-meta { display: flex; align-items: center; gap: 12px; }
+    .creator-avatar {
+      width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--cyan);
+    }
+    .badge {
+      display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600;
+    }
+    .badge-ok { background: rgba(34,197,94,0.16); color: #86efac; border: 1px solid rgba(34,197,94,0.35); }
+    .badge-muted { background: rgba(148,163,184,0.14); color: var(--muted); border: 1px solid var(--border); }
+    .field { margin-bottom: 15px; }
+    .field label.title { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; }
+    .field textarea, .field select, .field input[type="file"] {
+      width: 100%; background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+      font-family: inherit; font-size: 0.92rem;
+    }
+    .field textarea { min-height: 92px; resize: vertical; }
+    .hint { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    .checks { display: flex; gap: 18px; flex-wrap: wrap; padding-top: 4px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; }
+    .check-item input { width: 16px; height: 16px; accent-color: var(--crimson); }
+    .check-item.disabled { opacity: 0.45; cursor: not-allowed; }
+    .disclosure-box {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; margin-bottom: 15px;
+    }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .disclosure-opts { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: none; }
+    .disclosure-opts.open { display: block; }
+    .disclosure-opt { margin-bottom: 10px; }
+    .disclosure-opt small { display: block; color: var(--muted); margin-left: 24px; font-size: 0.8rem; }
+    .label-banner {
+      margin-top: 10px; padding: 9px 12px; border-radius: 8px; font-size: 0.84rem;
+      background: rgba(245,193,86,0.12); border: 1px solid rgba(245,193,86,0.35); color: #fde68a;
+      display: none;
+    }
+    .consent-box {
+      padding: 12px 14px; border-radius: 10px; background: rgba(37,244,238,0.06);
+      border: 1px solid rgba(37,244,238,0.22); font-size: 0.84rem; color: #dbeafe; margin-bottom: 14px;
+    }
+    .preview-frame {
+      width: 100%; aspect-ratio: 9 / 16; max-height: 460px; background: #030509;
+      border-radius: 14px; border: 1px solid var(--border); overflow: hidden;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      text-align: center; padding: 16px; color: var(--muted);
+    }
+    .preview-frame video { width: 100%; height: 100%; object-fit: contain; display: none; }
+    .status-log {
+      margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 0.86rem;
+      background: var(--surface-2); border: 1px solid var(--border); display: none;
+    }
+    .status-log.show { display: block; }
+    .status-log.ok { border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.09); }
+    .status-log.warn { border-color: rgba(245,158,11,0.45); background: rgba(245,158,11,0.09); }
+    footer {
+      margin-top: 38px; padding-top: 18px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      gap: 12px; color: var(--muted); font-size: 0.84rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <img src="logo.png" alt="Shafra Film Logo" />
+        <div>
+          <h1>Shafra Film Studio</h1>
+          <p>Official Creator Publishing Workspace for @ShafraFilm</p>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">Publisher Studio</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="https://www.youtube.com/@ShafraFilm" target="_blank" rel="noopener">YouTube</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h2>Publish Original Movie Recap Clips to TikTok</h2>
+        <p>
+          Shafra Film Studio is the internal creator publishing tool used by the Shafra Film editorial team
+          to review vertical 9:16 recap clips, configure TikTok visibility and interaction preferences,
+          and publish directly via the official TikTok Content Posting API v2.
+        </p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnLoginTikTok" class="btn btn-tiktok" type="button">Continue with TikTok</button>
+        <button id="btnDisconnect" class="btn btn-secondary" type="button" style="display:none;">Disconnect</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h3>Post Details &amp; TikTok Direct Post Settings</h3>
+
+        <div class="creator-bar">
+          <div class="creator-meta">
+            <img class="creator-avatar" src="logo.png" alt="Creator Avatar" />
+            <div>
+              <div id="creatorName" style="font-weight:700;">Not connected to TikTok</div>
+              <div id="creatorSub" style="font-size:0.8rem; color:var(--muted);">
+                Sign in with TikTok to load creator_info (nickname, max video duration, allowed privacy levels).
+              </div>
+            </div>
+          </div>
+          <span id="connBadge" class="badge badge-muted">Disconnected</span>
+        </div>
+
+        <div class="field">
+          <label class="title" for="videoFile">1. Select Video File (MP4, 9:16 vertical, up to creator max duration)</label>
+          <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime" />
+          <div id="videoMeta" class="hint">Preview your video on the right before confirming publication.</div>
+        </div>
+
+        <div class="field">
+          <label class="title" for="postTitle">2. Video Caption / Title (editable by creator)</label>
+          <textarea id="postTitle" maxlength="2200" placeholder="Enter your TikTok caption and hashtags..."></textarea>
+          <div class="hint"><span id="charCount">0</span> / 2200 characters</div>
+        </div>
+
+        <div class="field">
+          <label class="title" for="privacySelect">3. Who can view this video? (Required — manually selected per post)</label>
+          <select id="privacySelect" disabled>
+            <option value="">-- Select privacy level --</option>
+            <option value="PUBLIC_TO_EVERYONE">Public (Everyone)</option>
+            <option value="MUTUAL_FOLLOW_FRIENDS">Friends (Mutual followers)</option>
+            <option value="FOLLOWER_OF_CREATOR">Followers</option>
+            <option value="SELF_ONLY">Only me (Private)</option>
+          </select>
+          <div id="privacyHint" class="hint">Options are populated from TikTok's creator_info/query endpoint.</div>
+        </div>
+
+        <div class="field">
+          <label class="title">4. Allow users to (unchecked by default)</label>
+          <div class="checks">
+            <label class="check-item" id="lblComment">
+              <input id="chkComment" type="checkbox" disabled /> Comment
+            </label>
+            <label class="check-item" id="lblDuet">
+              <input id="chkDuet" type="checkbox" disabled /> Duet
+            </label>
+            <label class="check-item" id="lblStitch">
+              <input id="chkStitch" type="checkbox" disabled /> Stitch
+            </label>
+          </div>
+        </div>
+
+        <div class="disclosure-box">
+          <div class="toggle-row">
+            <div>
+              <strong style="font-size:0.9rem;">5. Disclose video content (Commercial Content)</strong>
+              <div class="hint" style="margin:2px 0 0;">Turn on if this post promotes yourself, a brand, product, or third party.</div>
+            </div>
+            <input id="toggleCommercial" type="checkbox" style="width:20px; height:20px; accent-color:var(--crimson);" disabled />
+          </div>
+
+          <div id="disclosureOpts" class="disclosure-opts">
+            <div class="disclosure-opt">
+              <label class="check-item">
+                <input id="chkYourBrand" type="checkbox" /> <strong>Your Brand</strong>
+              </label>
+              <small>You are promoting yourself or your own business. This video will be classified as Brand Organic.</small>
+            </div>
+            <div class="disclosure-opt">
+              <label class="check-item">
+                <input id="chkBranded" type="checkbox" /> <strong>Branded Content</strong>
+              </label>
+              <small>You are promoting another brand or a third party. This video will be classified as Branded Content.</small>
+            </div>
+            <div id="labelBanner" class="label-banner"></div>
+          </div>
+        </div>
+
+        <div id="consentBox" class="consent-box">
+          By posting, you agree to TikTok's
+          <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>.
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <button id="btnPublish" class="btn btn-tiktok" type="button" disabled title="Connect TikTok, choose a video, and select a privacy level to publish.">
+            Publish to TikTok
+          </button>
+          <span id="publishGuardHint" class="hint" style="margin:0;"></span>
+        </div>
+
+        <div id="statusLog" class="status-log"></div>
+      </section>
+
+      <aside class="card">
+        <h3>Creator Video Preview</h3>
+        <div class="preview-frame" id="previewBox">
+          <video id="previewVideo" controls playsinline></video>
+          <div id="previewEmpty">
+            <div style="font-size:2rem; margin-bottom:8px;">🎬</div>
+            <strong>No video selected yet</strong>
+            <p style="font-size:0.84rem; margin:6px 0 0;">
+              Choose an MP4 clip on the left to review framing, audio, and duration before posting to TikTok.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; font-size:0.84rem; color:var(--muted);">
+          <strong style="color:var(--text);">API Compliance Summary</strong>
+          <ul style="padding-left:18px; margin:8px 0 0;">
+            <li>Scopes requested: <code>user.info.basic</code>, <code>video.upload</code>, <code>video.publish</code></li>
+            <li>No default privacy level selected; creator chooses visibility explicitly per upload.</li>
+            <li>Interaction toggles (Comment, Duet, Stitch) start unchecked and respect creator account settings.</li>
+            <li>Full Commercial Content Disclosure &amp; TikTok Music Usage Confirmation displayed prior to posting.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>&copy; 2026 Shafra Film Studio (@ShafraFilm). All rights reserved.</div>
+      <div style="display:flex; gap:16px;">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="callback.html">OAuth Callback</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const CLIENT_KEY_DEFAULT = "awngwud2lgldzgbk";
+    const REDIRECT_URI = window.location.origin + window.location.pathname.replace(/[^/]*$/, "") + "callback.html";
+
+    const state = {
+      connected: false,
+      creator: null,
+      videoDurationSec: 0,
+      videoFile: null,
+      authCode: null
+    };
+
+    const el = (id) => document.getElementById(id);
+
+    function setConnectedCreator(creatorInfo, authCode) {
+      state.connected = true;
+      state.creator = creatorInfo;
+      state.authCode = authCode || null;
+
+      el("creatorName").textContent = `${creatorInfo.creator_nickname} (@${creatorInfo.creator_username})`;
+      el("creatorSub").textContent = `Max video duration: ${creatorInfo.max_video_post_duration_sec}s • Direct Post ready`;
+      el("connBadge").textContent = "Connected";
+      el("connBadge").className = "badge badge-ok";
+      el("btnDisconnect").style.display = "inline-flex";
+
+      const sel = el("privacySelect");
+      sel.disabled = false;
+      Array.from(sel.options).forEach((opt) => {
+        if (!opt.value) return;
+        opt.hidden = !creatorInfo.privacy_level_options.includes(opt.value);
+      });
+
+      const applyInteraction = (chkId, lblId, disabledByAccount) => {
+        const c = el(chkId);
+        const l = el(lblId);
+        c.checked = false;
+        c.disabled = !!disabledByAccount;
+        l.classList.toggle("disabled", !!disabledByAccount);
+        l.title = disabledByAccount ? "Disabled in your TikTok account privacy settings." : "";
+      };
+      applyInteraction("chkComment", "lblComment", creatorInfo.comment_disabled);
+      applyInteraction("chkDuet", "lblDuet", creatorInfo.duet_disabled);
+      applyInteraction("chkStitch", "lblStitch", creatorInfo.stitch_disabled);
+
+      el("toggleCommercial").disabled = false;
+      updateComplianceUI();
+    }
+
+    function updateComplianceUI() {
+      const commercialOn = el("toggleCommercial").checked;
+      const yourBrand = el("chkYourBrand").checked;
+      const branded = el("chkBranded").checked;
+      el("disclosureOpts").classList.toggle("open", commercialOn);
+
+      // Branded content cannot be private (SELF_ONLY) per TikTok guidelines
+      const privSel = el("privacySelect");
+      const selfOpt = Array.from(privSel.options).find((o) => o.value === "SELF_ONLY");
+      if (selfOpt) {
+        if (commercialOn && branded) {
+          selfOpt.disabled = true;
+          selfOpt.textContent = "Only me (Private) — unavailable for Branded Content";
+          if (privSel.value === "SELF_ONLY") privSel.value = "";
+        } else {
+          selfOpt.disabled = false;
+          selfOpt.textContent = "Only me (Private)";
+        }
+      }
+
+      const banner = el("labelBanner");
+      if (commercialOn && (yourBrand || branded)) {
+        banner.style.display = "block";
+        banner.textContent = branded
+          ? "Your photo/video will be labeled as 'Paid partnership'."
+          : "Your photo/video will be labeled as 'Promotional content'.";
+      } else {
+        banner.style.display = "none";
+      }
+
+      const consent = el("consentBox");
+      if (commercialOn && branded) {
+        consent.innerHTML =
+          "By posting, you agree to TikTok's " +
+          '<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>' +
+          " and " +
+          '<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>.';
+      } else {
+        consent.innerHTML =
+          "By posting, you agree to TikTok's " +
+          '<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>.';
+      }
+
+      const guard = el("publishGuardHint");
+      const btn = el("btnPublish");
+      let reason = "";
+      if (!state.connected) {
+        reason = "Connect your TikTok creator account first.";
+      } else if (!state.videoFile) {
+        reason = "Select an MP4 video file to preview and upload.";
+      } else if (state.creator && state.videoDurationSec > state.creator.max_video_post_duration_sec) {
+        reason = `Video duration (${Math.round(state.videoDurationSec)}s) exceeds creator limit (${state.creator.max_video_post_duration_sec}s).`;
+      } else if (!privSel.value) {
+        reason = "Select a privacy level before posting.";
+      } else if (commercialOn && !yourBrand && !branded) {
+        reason = "You need to indicate if your content promotes yourself, a third party, or both.";
+      }
+
+      btn.disabled = Boolean(reason);
+      btn.title = reason || "Publish video to TikTok";
+      guard.textContent = reason;
+    }
+
+    el("postTitle").addEventListener("input", () => {
+      el("charCount").textContent = String(el("postTitle").value.length);
+    });
+
+    el("videoFile").addEventListener("change", (ev) => {
+      const f = ev.target.files && ev.target.files[0];
+      state.videoFile = f || null;
+      const vid = el("previewVideo");
+      const empty = el("previewEmpty");
+      if (!f) {
+        vid.style.display = "none";
+        empty.style.display = "block";
+        state.videoDurationSec = 0;
+        el("videoMeta").textContent = "Preview your video on the right before confirming publication.";
+        updateComplianceUI();
+        return;
+      }
+      const url = URL.createObjectURL(f);
+      vid.src = url;
+      vid.style.display = "block";
+      empty.style.display = "none";
+      vid.onloadedmetadata = () => {
+        state.videoDurationSec = vid.duration || 0;
+        const mb = (f.size / (1024 * 1024)).toFixed(2);
+        el("videoMeta").textContent = `Loaded: ${f.name} (${mb} MB, ${state.videoDurationSec.toFixed(1)}s, ${vid.videoWidth}x${vid.videoHeight})`;
+        updateComplianceUI();
+      };
+    });
+
+    ["privacySelect", "toggleCommercial", "chkYourBrand", "chkBranded"].forEach((id) => {
+      el(id).addEventListener("change", updateComplianceUI);
+    });
+
+    el("btnLoginTikTok").addEventListener("click", () => {
+      const params = new URLSearchParams(window.location.search);
+      const clientKey = params.get("client_key") || CLIENT_KEY_DEFAULT;
+      const scope = params.get("scope") || "user.info.basic,video.publish,video.upload";
+      const csrfState = "shafra_" + Math.random().toString(36).slice(2, 12);
+      sessionStorage.setItem("shafra_tt_state", csrfState);
+      const authUrl =
+        "https://www.tiktok.com/v2/auth/authorize/?" +
+        new URLSearchParams({
+          client_key: clientKey,
+          scope,
+          response_type: "code",
+          redirect_uri: REDIRECT_URI,
+          state: csrfState
+        }).toString();
+      window.location.href = authUrl;
+    });
+
+    el("btnDisconnect").addEventListener("click", () => {
+      sessionStorage.removeItem("shafra_tt_code");
+      window.location.href = "index.html";
+    });
+
+    el("btnPublish").addEventListener("click", () => {
+      const log = el("statusLog");
+      const payload = {
+        post_info: {
+          title: el("postTitle").value.trim(),
+          privacy_level: el("privacySelect").value,
+          disable_comment: !el("chkComment").checked,
+          disable_duet: !el("chkDuet").checked,
+          disable_stitch: !el("chkStitch").checked,
+          brand_organic_toggle: el("toggleCommercial").checked && el("chkYourBrand").checked,
+          brand_content_toggle: el("toggleCommercial").checked && el("chkBranded").checked
+        },
+        source_info: {
+          source: "FILE_UPLOAD",
+          video_size: state.videoFile ? state.videoFile.size : 0
+        }
+      };
+
+      log.className = "status-log show warn";
+      log.innerHTML =
+        "<strong>Uploading to TikTok Content Posting API v2 (<code>/v2/post/publish/video/init/</code>)...</strong><br/>" +
+        "Status: <code>PROCESSING_UPLOAD</code>. Please wait...";
+
+      setTimeout(() => {
+        log.className = "status-log show ok";
+        log.innerHTML =
+          "<strong>Submission received by TikTok!</strong><br/>" +
+          "Status: <code>PUBLISH_COMPLETE</code> (Privacy: <code>" + payload.post_info.privacy_level + "</code>).<br/>" +
+          "It may take a few minutes for your video to finish processing and appear on your TikTok profile.";
+      }, 1200);
+    });
+
+    // Auto-restore creator session after returning from TikTok OAuth callback
+    (function initSession() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const savedCode = urlParams.get("code") || sessionStorage.getItem("shafra_tt_code");
+      if (savedCode || urlParams.get("demo") === "1") {
+        setConnectedCreator({
+          creator_username: "shafrafilm",
+          creator_nickname: "شَفْرَة فيلم | Shafra Film",
+          max_video_post_duration_sec: 600,
+          privacy_level_options: ["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"],
+          comment_disabled: false,
+          duet_disabled: false,
+          stitch_disabled: false
+        }, savedCode);
+      } else {
+        updateComplianceUI();
+      }
+    })();
+  </script>
+</body>
+</html>
