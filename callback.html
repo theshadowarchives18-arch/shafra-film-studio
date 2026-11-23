@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikTok Authorization Callback — Shafra Film Studio</title>
+  <style>
+    body {
+      margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #070a10; color: #f3f6fb; display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+    }
+    .card {
+      max-width: 620px; width: 100%; background: #0f141e; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 28px;
+    }
+    h1 { margin: 0 0 10px; font-size: 1.3rem; }
+    p { color: #98a4b8; font-size: 0.94rem; }
+    pre {
+      background: #161d2b; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+      padding: 12px; overflow-x: auto; font-size: 0.82rem; color: #25f4ee; word-break: break-all;
+      white-space: pre-wrap;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .btn {
+      border: none; border-radius: 10px; padding: 10px 16px; font-weight: 600; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; font-size: 0.9rem;
+    }
+    .btn-primary { background: #fe2c55; color: #fff; }
+    .btn-secondary { background: #161d2b; color: #f3f6fb; border: 1px solid rgba(255,255,255,0.12); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="title">TikTok Authorization Received</h1>
+    <p id="desc">Shafra Film Studio received the OAuth 2.0 response from TikTok.</p>
+    <pre id="out">Checking URL parameters...</pre>
+    <div class="actions">
+      <a id="btnContinue" class="btn btn-primary" href="index.html">Open Publisher Studio</a>
+      <button id="btnCopy" class="btn btn-secondary" type="button">Copy Full Callback URL</button>
+    </div>
+  </div>
+  <script>
+    const q = new URLSearchParams(window.location.search);
+    const code = q.get("code");
+    const err = q.get("error");
+    const scopes = q.get("scopes") || "";
+
+    if (err) {
+      document.getElementById("title").textContent = "TikTok Authorization Cancelled or Failed";
+      document.getElementById("desc").textContent = q.get("error_description") || err;
+      document.getElementById("out").textContent = window.location.href;
+    } else if (code) {
+      sessionStorage.setItem("shafra_tt_code", code);
+      document.getElementById("title").textContent = "TikTok Account Connected Successfully";
+      document.getElementById("desc").textContent = "Granted scopes: " + (scopes || "user.info.basic, video.publish, video.upload");
+      document.getElementById("out").textContent = window.location.href;
+      document.getElementById("btnContinue").href = "index.html?code=" + encodeURIComponent(code);
+    } else {
+      document.getElementById("title").textContent = "Shafra Film OAuth Redirect Endpoint";
+      document.getElementById("desc").textContent = "This URL handles TikTok Login Kit OAuth 2.0 redirects for Shafra Film Studio.";
+      document.getElementById("out").textContent = window.location.href;
+    }
+
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        document.getElementById("btnCopy").textContent = "Copied!";
+      } catch (e) {
+        document.getElementById("btnCopy").textContent = "Copy manually from box above";
+      }
+    });
+  </script>
+</body>
+</html>
